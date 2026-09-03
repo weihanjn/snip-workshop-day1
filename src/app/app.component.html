@@ -1,14 +1,14 @@
 <main class="shell">
   <section class="hero">
     <p class="eyebrow">Snip URL shortener</p>
-    <h1>Short links, tiny app.</h1>
-    <p>Paste an http or https URL and Snip will make a short link using the backend at http://localhost:3000.</p>
+    <h1>Short links, beautifully simple.</h1>
+    <p class="subline">Paste an http or https URL and Snip will make a short link using the backend at http://localhost:3000.</p>
   </section>
 
-  <section class="card">
+  <section class="card composer-card">
     <form (ngSubmit)="createLink()" novalidate>
-      <label for="url">URL to shorten</label>
-      <div class="form-row">
+      <label class="sr-only" for="url">URL to shorten</label>
+      <div class="form-row composer">
         <input
           id="url"
           name="url"
