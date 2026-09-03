@@ -1,0 +1,69 @@
+<main class="shell">
+  <section class="hero">
+    <p class="eyebrow">Snip URL shortener</p>
+    <h1>Short links, tiny app.</h1>
+    <p>Paste an http or https URL and Snip will make a short link using the backend at http://localhost:3000.</p>
+  </section>
+
+  <section class="card">
+    <form (ngSubmit)="createLink()" novalidate>
+      <label for="url">URL to shorten</label>
+      <div class="form-row">
+        <input
+          id="url"
+          name="url"
+          type="url"
+          placeholder="https://example.com/very/long/link"
+          [ngModel]="url()"
+          (ngModelChange)="url.set($event)"
+          [disabled]="isLoading()"
+          required
+        />
+        <button type="submit" [disabled]="isLoading()">
+          {{ isLoading() ? 'Saving...' : 'Shorten' }}
+        </button>
+      </div>
+    </form>
+
+    @if (error()) {
+      <p class="message error">{{ error() }}</p>
+    }
+
+    @if (latestLink(); as link) {
+      <p class="message success">
+        Short link:
+        <a [href]="link.shortUrl" target="_blank" rel="noopener">{{ link.shortUrl }}</a>
+      </p>
+    }
+  </section>
+
+  <section class="card">
+    <div class="table-header">
+      <h2>All links</h2>
+      <button class="secondary" type="button" (click)="ngOnInit()" [disabled]="isLoading()">Refresh</button>
+    </div>
+
+    @if (links().length) {
+      <table>
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th>Original URL</th>
+            <th>Hits</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (link of links(); track link.code) {
+            <tr>
+              <td><a [href]="link.shortUrl" target="_blank" rel="noopener">{{ link.code }}</a></td>
+              <td><a [href]="link.url" target="_blank" rel="noopener">{{ link.url }}</a></td>
+              <td>{{ link.hits }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <p class="empty">No links yet. Create the first Snip above.</p>
+    }
+  </section>
+</main>
